@@ -1,0 +1,19 @@
+{
+  "name": "saudi-soft",
+  "owner": {
+    "name": "aboalrejalai"
+  },
+  "metadata": {
+    "description": "Saudi Soft — standalone Soft identity on upstream shadcn (lucide, SA green, RTL, dark)",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "saudi-soft",
+      "description": "Saudi Soft — Soft identity on upstream shadcn (lucide, SA green, RTL, dark).",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/saudi-soft"]
+    }
+  ]
+}

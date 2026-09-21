@@ -1,0 +1,11 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Saudi Soft",
+      "description": "Standalone Soft identity on upstream shadcn — SA green, lucide, 10/12px radius, RTL, light/dark.",
+      "skills": ["saudi-soft"]
+    }
+  ]
+}
