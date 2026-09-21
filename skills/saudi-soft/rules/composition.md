@@ -8,7 +8,7 @@
 - Toast notifications follow the project base
 - Choosing between overlay components
 - Dialog, Sheet, and Drawer always need a Title
-- Card structure
+- Card structure (section vs KPI)
 - Button has no isPending or isLoading prop
 - TabsTrigger must be inside TabsList
 - Avatar always needs AvatarFallback
@@ -143,14 +143,15 @@ toast("File deleted.", {
 
 ---
 
-## Card structure
+## Card structure (section vs KPI)
 
-Use full composition — don't dump everything into `CardContent`:
+**Section / content cards** — use full composition. Prefer `CardTitle` with
+`className="text-base"` (16px Soft section title), not the default 24px:
 
 ```tsx
 <Card>
   <CardHeader>
-    <CardTitle>Team Members</CardTitle>
+    <CardTitle className="text-base">Team Members</CardTitle>
     <CardDescription>Manage your team.</CardDescription>
   </CardHeader>
   <CardContent>...</CardContent>
@@ -159,6 +160,14 @@ Use full composition — don't dump everything into `CardContent`:
   </CardFooter>
 </Card>
 ```
+
+**KPI / stat cards** — do **not** force `CardHeader` / `CardTitle`. Compose a
+gradient surface + muted label + bold value per
+[recipes.md — KPI card](../references/recipes.md). Never put the metric number
+in `CardTitle`.
+
+**Hub / quick-action cards** — bordered tile + icon box; see recipes. Not a
+`CardTitle` block either.
 
 ---
 

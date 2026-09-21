@@ -1,8 +1,7 @@
 /* ============================================================
    saudi-soft-theme — shadcn semantic bridge (Tailwind v4)
-   Identity from mu-ai design package (UEP / Majmaah University).
-   Light hex from docs/design-package/tokens.css; dark rollover
-   mirrors mu-ai src/index.css .dark (SA lift + gray invert).
+   Soft identity: Saudi green (SA), IBM Plex Sans Arabic,
+   8/10/12 radius, RTL-ready, light + .dark token rollover.
    ============================================================ */
 
 /* # saudi-soft-theme:start */
@@ -56,8 +55,15 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-info: var(--info);
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-info: var(--status-info);
+  --color-label: var(--label);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-subtle: var(--primary-subtle);
 
-  /* Ladder: sm 8 · md 10 · lg 12 (mu-ai rounded.sm/md/lg) */
+  /* Ladder: sm 8 · md 10 · lg 12 */
   --radius-sm: 0.5rem;
   --radius-md: 0.625rem;
   --radius-lg: 0.75rem;
@@ -65,9 +71,22 @@
   --radius-2xl: 1rem;
 
   --font-sans: var(--font-sans-soft);
+
+  /* Map Soft elevation → Tailwind shadow-e* utilities */
+  --shadow-e1: var(--soft-shadow-e1);
+  --shadow-e2: var(--soft-shadow-e2);
+  --shadow-e3: var(--soft-shadow-e3);
+  --shadow-e4: var(--soft-shadow-e4);
+  --shadow-e5: var(--soft-shadow-e5);
+  --shadow-e6: var(--soft-shadow-e6);
 }
 
 :root {
+  /* Layout metrics (app shell) */
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 72px;
+  --topbar-height: 64px;
+
   /* SA scale (active steps) */
   --sa-50: #f3fcf6;
   --sa-100: #dff6e7;
@@ -143,6 +162,9 @@
   --success: #079455;
   --warning: #dc6803;
   --info: #1570ef;
+  --status-success: var(--success);
+  --status-warning: var(--warning);
+  --status-info: var(--info);
 
   --status-success-bg: #ecfdf3;
   --status-success-border: #abefc6;
@@ -156,24 +178,33 @@
   --primary-hover: var(--sa-700);
   --primary-active: var(--sa-800);
   --primary-subtle: var(--sa-50);
+  --label: var(--gray-700);
 
   --font-sans-soft: "IBM Plex Sans Arabic", "Work Sans", ui-sans-serif, system-ui,
     sans-serif;
   --font-mono-soft: "Inconsolata", ui-monospace, SFMono-Regular, monospace;
 
   --overlay: rgb(13 18 28 / 0.4);
-  --shadow-e1: 0 1px 2px 0 rgb(16 24 40 / 0.05);
-  --shadow-e2: 0 1px 3px 0 rgb(16 24 40 / 0.1), 0 1px 2px 0 rgb(16 24 40 / 0.06);
-  --shadow-e3: 0 4px 8px -2px rgb(16 24 40 / 0.1), 0 2px 4px -2px rgb(16 24 40 / 0.06);
-  --shadow-e4: 0 12px 16px -4px rgb(16 24 40 / 0.08), 0 4px 6px -2px rgb(16 24 40 / 0.03);
+  --blur-md: 16px;
+
+  --soft-shadow-e1: 0 1px 2px 0 rgb(16 24 40 / 0.05);
+  --soft-shadow-e2: 0 1px 3px 0 rgb(16 24 40 / 0.1), 0 1px 2px 0 rgb(16 24 40 / 0.06);
+  --soft-shadow-e3: 0 4px 8px -2px rgb(16 24 40 / 0.1), 0 2px 4px -2px rgb(16 24 40 / 0.06);
+  --soft-shadow-e4: 0 12px 16px -4px rgb(16 24 40 / 0.08), 0 4px 6px -2px rgb(16 24 40 / 0.03);
+  --soft-shadow-e5: 0 20px 24px -4px rgb(16 24 40 / 0.08), 0 8px 8px -4px rgb(16 24 40 / 0.03);
+  --soft-shadow-e6: 0 24px 48px -12px rgb(16 24 40 / 0.18);
 
   --gradient-1: linear-gradient(90deg, #1b8354 0%, #25935f 100%);
   --gradient-2: linear-gradient(45deg, #166a45 0%, #1b8354 100%);
   --gradient-primary: var(--gradient-2);
+  --gradient-mesh:
+    radial-gradient(at 40% 20%, rgb(27 131 84 / 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgb(84 192 138 / 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgb(20 87 58 / 0.08) 0px, transparent 50%);
 }
 
 .dark {
-  /* SA lift for contrast on dark surfaces (mu-ai .dark) */
+  /* SA lift for contrast on dark surfaces */
   --sa-50: #0c1f16;
   --sa-100: #0f2a1c;
   --sa-200: #14573a;
@@ -244,10 +275,14 @@
   --success: #47cd89;
   --warning: #fdb022;
   --info: #53b0fd;
+  --status-success: var(--success);
+  --status-warning: var(--warning);
+  --status-info: var(--info);
 
   --primary-hover: var(--sa-500);
   --primary-active: var(--sa-700);
   --primary-subtle: var(--sa-50);
+  --label: var(--gray-700);
 
   --status-success-bg: rgb(7 148 85 / 0.15);
   --status-success-border: rgb(71 205 137 / 0.4);
@@ -259,10 +294,12 @@
   --status-info-border: rgb(83 176 253 / 0.4);
 
   --overlay: rgb(0 0 0 / 0.55);
-  --shadow-e1: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-e2: 0 2px 4px -1px rgb(0 0 0 / 0.35);
-  --shadow-e3: 0 4px 8px -2px rgb(0 0 0 / 0.4);
-  --shadow-e4: 0 8px 16px -4px rgb(0 0 0 / 0.45);
+  --soft-shadow-e1: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --soft-shadow-e2: 0 2px 4px -1px rgb(0 0 0 / 0.35);
+  --soft-shadow-e3: 0 4px 8px -2px rgb(0 0 0 / 0.4);
+  --soft-shadow-e4: 0 8px 16px -4px rgb(0 0 0 / 0.45);
+  --soft-shadow-e5: 0 16px 32px -8px rgb(0 0 0 / 0.5);
+  --soft-shadow-e6: 0 24px 48px -12px rgb(0 0 0 / 0.55);
 }
 
 @layer base {
@@ -271,6 +308,28 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-1 {
+    background: var(--gradient-1);
+  }
+  .bg-gradient-2 {
+    background: var(--gradient-2);
+  }
+  .bg-gradient-brand {
+    background: var(--gradient-primary);
+  }
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .bg-mesh {
+    background: var(--gradient-mesh);
   }
 }
 

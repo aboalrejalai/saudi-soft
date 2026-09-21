@@ -3,11 +3,12 @@ name: saudi-soft
 description: >
   Builds complete React apps with upstream shadcn/ui under the Saudi Soft
   identity — SA green (#1B8354), IBM Plex Sans Arabic, lucide icons, 10/12px
-  radius, RTL, and light/dark tokens. Covers init, add, search, compose, theme,
-  forms, charts, and chat UI. Use when the user mentions Saudi Soft, Soft theme,
-  mu-ai green branding on shadcn, studio/portfolio/SaaS with Saudi colors, or
-  asks to scaffold a Soft project. Self-contained: does not require any other
-  skill folder.
+  radius, RTL, light/dark tokens, Soft app shell and KPI/hub card recipes.
+  Covers init, add, search, compose, theme, forms, charts, dashboards, and
+  chat UI. Use when the user mentions Saudi Soft, Soft theme, Saudi green
+  branding on shadcn, studio/portfolio/SaaS with Soft colors, RTL Arabic UI,
+  Soft sidebar/dashboard, or asks to scaffold a Soft project. Self-contained:
+  does not require any other skill folder.
 user-invocable: false
 allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
@@ -83,6 +84,9 @@ node path/to/saudi-soft/scripts/evaluate-project.js
 4. `node path/to/saudi-soft/scripts/apply-theme.js`
 5. Load IBM Plex Sans Arabic; set `lang` / `dir` for Arabic.
 6. Wire `.dark` via `ThemeProvider` (`attribute="class"`) or SPA toggle.
+7. If the ask is an **app with navigation / dashboard**, follow the **app shell**
+   recipe in [`references/recipes.md`](./references/recipes.md). Forms or dialogs
+   alone need tokens only — no sidebar required.
 
 ---
 
@@ -105,12 +109,19 @@ npx shadcn@latest docs button
 Follow Critical Rules below. After third-party registry adds, fix imports to
 project aliases and swap non-lucide icons to `lucide-react`.
 
+- **Dashboard / hub / Soft UI shell** → compose from
+  [`references/recipes.md`](./references/recipes.md): page header → KPI row →
+  hub grid (and app shell when navigation exists).
+- **Everything else** → shadcn docs + Critical Rules as usual.
+
 ---
 
 ## Principles
 
 1. **Use existing components first.** `npx shadcn@latest search` before custom UI.
-2. **Compose, don't reinvent.** Settings = Tabs + Card + fields. Dashboard = Sidebar + Card + Chart + Table.
+2. **Compose, don't reinvent.** Settings = Tabs + Field forms. Dashboard / hub =
+   Soft recipes (shell + header + KPI + hub cards) — see
+   [`references/recipes.md`](./references/recipes.md).
 3. **Built-in variants first.** `variant="outline"`, `size="sm"`.
 4. **Semantic colors.** `bg-primary`, `text-muted-foreground` — never raw palette classes.
 
@@ -122,7 +133,8 @@ Always enforced. Incorrect/Correct pairs in the linked files.
 
 ### Styling & Tailwind → [rules/styling.md](./rules/styling.md)
 
-- **`className` for layout, not styling.** Never override component colors/typography.
+- **`className` = layout + Soft identity exceptions** (tints, Soft gradients,
+  `CardTitle text-base`, KPI lift). Never `bg-green-*` / hex / brand `dark:`.
 - **No `space-x-*` / `space-y-*`.** Use `flex` + `gap-*`.
 - **Use `size-*` when width = height.**
 - **Use `truncate` shorthand.**
@@ -144,7 +156,8 @@ Always enforced. Incorrect/Correct pairs in the linked files.
 - **Items inside their Group** (`SelectItem` → `SelectGroup`, etc.).
 - **`asChild` (radix) or `render` (base)** for custom triggers → [rules/base-vs-radix.md](./rules/base-vs-radix.md)
 - **Dialog / Sheet / Drawer need a Title** (or `sr-only`).
-- **Full Card composition.**
+- **Section cards:** full Card composition; `CardTitle` with `text-base`.
+  **KPI cards:** Soft recipe — no `CardTitle` for the metric.
 - **Button has no `isPending`.** Compose `Spinner` + `data-icon` + `disabled`.
 - **`TabsTrigger` inside `TabsList`.**
 - **`Avatar` always needs `AvatarFallback`.**

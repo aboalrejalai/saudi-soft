@@ -6,7 +6,7 @@ See [customization.md](../customization.md) for theming, CSS variables, and addi
 
 - Semantic colors
 - Built-in variants first
-- className for layout only
+- className — layout + Soft identity exceptions
 - No space-x-* / space-y-*
 - Prefer size-* over w-* h-* when equal
 - Prefer truncate shorthand
@@ -79,9 +79,26 @@ If you need a success/positive color that doesn't exist as a semantic token, use
 
 ---
 
-## className for layout only
+## className — layout + Soft identity exceptions
 
-Use `className` for layout (e.g. `max-w-md`, `mx-auto`, `mt-4`), **not** for overriding component colors or typography. To change colors, use semantic tokens, built-in variants, or CSS variables.
+Default: use `className` for **layout** (`max-w-md`, `mx-auto`, `mt-4`, `gap-4`, `grid-cols-*`). Prefer built-in variants and semantic tokens over ad-hoc colors.
+
+**Still forbidden:**
+
+- Raw palette: `bg-green-*`, `bg-blue-*`, `text-emerald-*`, hex in className
+- Manual `dark:bg-*` / `dark:text-*` for brand colors
+- Non-lucide icon libraries
+- Hand-rolled shimmer / mask animations (use Soft/shadcn utilities)
+
+**Allowed Soft identity `className` (see [recipes.md](../references/recipes.md)):**
+
+| Pattern | Example |
+| --- | --- |
+| Soft tints | `bg-primary/10`, `border-primary/10`, `hover:bg-primary/5`, `hover:border-primary/40` |
+| Soft gradients | `bg-gradient-to-br from-primary/10 to-transparent`, `bg-gradient-1`, `bg-gradient-2`, `text-gradient` |
+| Section title size | `CardTitle className="text-base"` |
+| KPI hover lift | `hover:-translate-y-0.5`, `shadow-e4` |
+| Layout padding/grid | `p-4`, `p-5`, `p-6`, `gap-4`, `grid-cols-*` |
 
 **Incorrect:**
 
@@ -91,7 +108,7 @@ Use `className` for layout (e.g. `max-w-md`, `mx-auto`, `mt-4`), **not** for ove
 </Card>
 ```
 
-**Correct:**
+**Correct (layout):**
 
 ```tsx
 <Card className="max-w-md mx-auto">
@@ -99,10 +116,19 @@ Use `className` for layout (e.g. `max-w-md`, `mx-auto`, `mt-4`), **not** for ove
 </Card>
 ```
 
-To customize a component's appearance, prefer these approaches in order:
-1. **Built-in variants** — `variant="outline"`, `variant="destructive"`, etc.
-2. **Semantic color tokens** — `bg-primary`, `text-muted-foreground`.
-3. **CSS variables** — define custom colors in the global CSS file (see [customization.md](../customization.md)).
+**Correct (Soft KPI tint):**
+
+```tsx
+<div className="rounded-xl border border-primary/10 bg-gradient-to-br from-primary/10 to-transparent p-6">
+  …
+</div>
+```
+
+Prefer in order:
+1. **Built-in variants** — `variant="outline"`, `size="sm"`, etc.
+2. **Semantic Soft tokens** — `bg-primary`, `text-muted-foreground`, `bg-success/10`.
+3. **Soft-allowed className** — table above.
+4. **CSS variables** — only in the global CSS file (see [customization.md](../customization.md)).
 
 ---
 

@@ -10,6 +10,7 @@ Components reference semantic CSS variable tokens. Soft supplies those tokens vi
 - How it works
 - Dark mode
 - Applying / updating the Soft bridge
+- Soft utilities (gradients, mesh, elevation)
 - Adding custom colors (status extras)
 - Border radius
 - Customizing components
@@ -57,11 +58,15 @@ or raw hex in `className`.
 | `--primary` / `--primary-foreground` | SA-600 `#1B8354` / white |
 | `--secondary` | SA-700 `#166A45` |
 | `--muted` / `--muted-foreground` | Gray-100 / gray-600 |
+| `--label` | Gray-700 `#384250` — form labels |
 | `--destructive` | `#D92D20` |
 | `--border` / `--input` / `--ring` | Gray-200 / SA ring |
 | `--chart-1` … `--chart-5` | SA-derived chart palette |
-| `--sidebar-*` | Soft sidebar tokens |
-| `--success` / `--warning` / `--info` | Status extras in the Soft bridge |
+| `--sidebar-*` | Soft sidebar color tokens |
+| `--sidebar-width` / `--sidebar-collapsed-width` | 280px / 72px |
+| `--topbar-height` | 64px |
+| `--success` / `--warning` / `--info` | Status extras |
+| `--status-success` / `--status-warning` / `--status-info` | Aliases of the above |
 
 ---
 
@@ -99,6 +104,25 @@ The script replaces the marked block between:
 ```
 
 Also load **IBM Plex Sans Arabic** (400–700) once (Google Fonts or `@fontsource`).
+
+---
+
+## Soft Utilities (gradients, mesh, elevation)
+
+Injected with the bridge. Prefer these over hand-written brand gradients:
+
+| Utility | Use |
+| --- | --- |
+| `bg-gradient-1` | Horizontal SA-600 → SA-500 |
+| `bg-gradient-2` / `bg-gradient-brand` | Diagonal SA-700 → SA-600 (primary brand fill) |
+| `text-gradient` | Brand gradient clipped to text |
+| `bg-mesh` | Soft radial SA wash (landing heroes) |
+| `shadow-e1` … `shadow-e6` | Soft elevation ladder |
+| `from-primary/10 to-transparent` | KPI / tint card surfaces |
+
+Overlays: `bg-foreground/40` + blur via `--blur-md` (16px) for dialogs/sheets.
+
+Composition patterns: [`references/recipes.md`](./references/recipes.md).
 
 ---
 
@@ -142,7 +166,7 @@ chrome unless the user asks.
 See [rules/styling.md](./rules/styling.md). Prefer in order:
 
 1. Built-in variants (`variant="outline"`, `size="sm"`)
-2. Layout `className` only (never override component brand colors)
+2. Soft-allowed `className` (layout + Soft identity tints/gradients — see styling rules)
 3. New `cva` variant in the component source
 4. Wrapper components composing primitives
 
