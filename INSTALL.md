@@ -1,23 +1,17 @@
-# Install Guide — Saudi Soft
-
-Agent Skill package. Source of truth:
+# Install
 
 **https://github.com/aboalrejalai/saudi-soft**
 
-Catalog page: [skills.sh/aboalrejalai/saudi-soft](https://skills.sh/aboalrejalai/saudi-soft)
-
-Layout matches [skills.sh / Skills CLI](https://github.com/vercel-labs/skills):
-
-| File | Role |
+| Path | Role |
 | --- | --- |
-| `skills/saudi-soft/` | Soft skill (shadcn + Soft theme, lucide, RTL, dark) |
-| [`skills.sh.json`](skills.sh.json) | Groupings for the skills.sh repo page |
-| [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) | Interactive skill picker |
+| `skills/saudi-soft/` | Skill (shadcn, Soft theme, lucide, RTL, dark mode) |
+| `skills.sh.json` | skills.sh grouping |
+| `.claude-plugin/marketplace.json` | Skill picker |
 
 ## Prerequisites
 
 - Node.js 18+
-- A supported coding agent (Cursor, Claude Code, Codex, …)
+- Cursor, Claude Code, Codex, or another agent supported by the Skills CLI
 
 ## Install
 
@@ -33,21 +27,19 @@ npx skills add aboalrejalai/saudi-soft -a claude-code
 npx skills add aboalrejalai/saudi-soft -a agents
 ```
 
-Explicit skill name (same result — this repo has one skill):
-
 ```bash
 npx skills add aboalrejalai/saudi-soft --skill saudi-soft -a cursor
 ```
 
-> **Never use `--all`.** It expands to every agent and scatters stray folders. Always pass `-a <agent>`.
+Do not use `--all`. It installs into every agent.
 
-## List skills
+## List
 
 ```bash
 npx skills add aboalrejalai/saudi-soft --list
 ```
 
-## Install from a local clone
+## Local clone
 
 ```bash
 git clone https://github.com/aboalrejalai/saudi-soft.git
@@ -61,17 +53,6 @@ npx skills add . -a cursor
 npx skills update
 ```
 
-Or re-add:
-
 ```bash
 npx skills add aboalrejalai/saudi-soft --skill saudi-soft -a cursor
 ```
-
-## What this is / is not
-
-| | |
-| --- | --- |
-| **Is** | Soft identity overlay on upstream shadcn (theme, lucide, RTL, dark) |
-| **Is not** | Formal DGA `@dga` component registry |
-
-For government / formal NDS work, use a separate package — not this repo.
