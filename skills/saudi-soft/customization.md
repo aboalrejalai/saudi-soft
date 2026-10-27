@@ -30,9 +30,11 @@ Components reference semantic CSS variable tokens. Soft supplies those tokens vi
    into the project's global CSS (`tailwindCssFile` from `npx shadcn@latest info`).
 
 2. Do **not** replace Soft primary with arbitrary shadcn color presets (`blue`,
-   `zinc`, random `--preset` themes) unless the user explicitly asks to leave Soft.
-3. Do **not** change `--primary` away from SA green (`#1B8354` / Soft dark lift)
-   without an explicit user request.
+   `zinc`, random `--preset` themes) unless the user explicitly asks to leave Soft
+   or rebrand.
+3. Do **not** change `--primary` / the SA ladder away from Soft green without an
+   **explicit user request** to rebrand. When they do ask, follow
+   [`references/rebrand.md`](./references/rebrand.md) — edit the theme block only.
 4. Keep `iconLibrary: lucide` in `components.json`.
 
 Identity tables: [`references/identity.md`](./references/identity.md).
@@ -113,16 +115,30 @@ Injected with the bridge. Prefer these over hand-written brand gradients:
 
 | Utility | Use |
 | --- | --- |
-| `bg-gradient-1` | Horizontal SA-600 → SA-500 |
+| `bg-gradient-1` | Horizontal SA-600 → SA-500 (`var(--sa-*)`) |
 | `bg-gradient-2` / `bg-gradient-brand` | Diagonal SA-700 → SA-600 (primary brand fill) |
 | `text-gradient` | Brand gradient clipped to text |
-| `bg-mesh` | Soft radial SA wash (landing heroes) |
+| `bg-mesh` | Soft radial wash from the SA ladder |
 | `shadow-e1` … `shadow-e6` | Soft elevation ladder |
 | `from-primary/10 to-transparent` | KPI / tint card surfaces |
 
 Overlays: `bg-foreground/40` + blur via `--blur-md` (16px) for dialogs/sheets.
 
 Composition patterns: [`references/recipes.md`](./references/recipes.md).
+
+---
+
+## Rebrand (explicit request only)
+
+Default Soft stays SA green. When the user **explicitly** asks to change brand
+colors (e.g. client palette):
+
+1. Edit only the Soft theme markers in `tailwindCssFile` (or update the bridge
+   source and re-run `apply-theme.js`).
+2. Replace `--sa-50…900` (and `.dark` ladder). Gradients already use `var(--sa-*)`.
+3. Do not rewrite pages that already use semantic Soft classes.
+
+Full steps and Soft-native vs legacy: [`references/rebrand.md`](./references/rebrand.md).
 
 ---
 

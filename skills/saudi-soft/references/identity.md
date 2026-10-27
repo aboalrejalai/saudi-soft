@@ -25,6 +25,8 @@ Saudi Soft visual identity — SA green, IBM Plex Sans Arabic, lucide, RTL, ligh
 
 Prefer bridged utilities: `bg-primary`, `text-foreground`, `border-border`, `bg-success/10`, `bg-status-success/10`. Never `bg-green-600` or raw hex in className.
 
+The SA ladder (`--sa-50…900`) is Soft’s default brand scale. On an **explicit rebrand request**, replace those hex values (light + `.dark`); `--primary`, charts, and Soft gradients are derived from the ladder — see [`rebrand.md`](rebrand.md). Do not scatter client colors into page files.
+
 Dark mode: apply class `.dark` on the root. Soft bridge lifts SA greens and inverts gray ladder (see [`theme-bridge.css`](theme-bridge.css)).
 
 ## Radius
@@ -93,9 +95,11 @@ Full recipes: [`recipes.md`](recipes.md).
 
 Bridge utilities (after `apply-theme.js`):
 
-- `bg-gradient-1` / `bg-gradient-2` / `bg-gradient-brand` / `text-gradient`
-- `bg-mesh` — soft SA radial wash for landing heroes
+- `bg-gradient-1` / `bg-gradient-2` / `bg-gradient-brand` / `text-gradient` — **derived from `var(--sa-*)`**
+- `bg-mesh` — soft radial wash from the same ladder
 - `shadow-e1` … `shadow-e6` — Soft elevation ladder
+
+Replacing the SA hex ladder recolors gradients automatically. Details: [`rebrand.md`](rebrand.md).
 
 ## Dark mode wiring
 

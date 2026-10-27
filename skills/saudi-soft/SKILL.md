@@ -9,7 +9,7 @@ description: >
   branding on shadcn, studio/portfolio/SaaS with Soft colors, RTL Arabic UI,
   Soft sidebar/dashboard, or asks to scaffold a Soft project. Self-contained:
   does not require any other skill folder.
-user-invocable: false
+user-invocable: true
 allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
 
@@ -70,9 +70,24 @@ node path/to/saudi-soft/scripts/evaluate-project.js
 
 | Mode | When | Action |
 | --- | --- | --- |
-| **A** | Empty / no shadcn | Scaffold + `shadcn init` + lucide + Soft theme |
-| **B** | shadcn present, Soft theme missing | `apply-theme.js` only |
+| **A** | Empty / no shadcn | Scaffold + `shadcn init` + lucide + Soft theme (**Soft-native** from day one) |
+| **B** | shadcn present, Soft theme missing | `apply-theme.js` only — do not rewrite pages |
 | **C** | Soft-ready | `shadcn add <name>` + compose per rules |
+| **Ask** | Large / non-Soft patterns (raw palette, wrong icons, no tokens) | **Ask before acting** — do not assume |
+
+### Soft-native vs legacy (ask before bulk work)
+
+If evaluate (or a quick scan) shows a large existing app that is **not** Soft-native,
+ask which path the user wants — never default to rewriting hundreds of pages:
+
+1. **Theme-only** — inject/update Soft tokens for colors and **new** UI only; leave
+   old pages as-is unless the user points at specific files.
+2. **Soft-native for new work** — every new screen follows Soft 100%; migrate old
+   pages only when touched.
+3. **Full Soft migration** — only if the user explicitly approves.
+
+Later brand-color changes: [`references/rebrand.md`](./references/rebrand.md)
+(explicit request only; Soft-native apps = one theme block).
 
 ---
 
@@ -87,6 +102,8 @@ node path/to/saudi-soft/scripts/evaluate-project.js
 7. If the ask is an **app with navigation / dashboard**, follow the **app shell**
    recipe in [`references/recipes.md`](./references/recipes.md). Forms or dialogs
    alone need tokens only — no sidebar required.
+8. Greenfield Soft-native means later rebrands edit the theme ladder only — see
+   [`references/rebrand.md`](./references/rebrand.md).
 
 ---
 
@@ -308,3 +325,4 @@ node path/to/saudi-soft/scripts/apply-theme.js [optional-css-path]
 - [references/theme-bridge.css](./references/theme-bridge.css)
 - [references/identity.md](./references/identity.md)
 - [references/recipes.md](./references/recipes.md)
+- [references/rebrand.md](./references/rebrand.md)

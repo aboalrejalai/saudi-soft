@@ -194,13 +194,14 @@
   --soft-shadow-e5: 0 20px 24px -4px rgb(16 24 40 / 0.08), 0 8px 8px -4px rgb(16 24 40 / 0.03);
   --soft-shadow-e6: 0 24px 48px -12px rgb(16 24 40 / 0.18);
 
-  --gradient-1: linear-gradient(90deg, #1b8354 0%, #25935f 100%);
-  --gradient-2: linear-gradient(45deg, #166a45 0%, #1b8354 100%);
+  /* Derived from SA ladder — rebrand by replacing --sa-* only */
+  --gradient-1: linear-gradient(90deg, var(--sa-600) 0%, var(--sa-500) 100%);
+  --gradient-2: linear-gradient(45deg, var(--sa-700) 0%, var(--sa-600) 100%);
   --gradient-primary: var(--gradient-2);
   --gradient-mesh:
-    radial-gradient(at 40% 20%, rgb(27 131 84 / 0.12) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgb(84 192 138 / 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgb(20 87 58 / 0.08) 0px, transparent 50%);
+    radial-gradient(at 40% 20%, color-mix(in srgb, var(--sa-600) 12%, transparent) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, color-mix(in srgb, var(--sa-400) 10%, transparent) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, color-mix(in srgb, var(--sa-800) 8%, transparent) 0px, transparent 50%);
 }
 
 .dark {

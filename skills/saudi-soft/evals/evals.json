@@ -69,6 +69,29 @@
         "Hub cards with icon tile and hover border-primary/40 or bg-primary/5",
         "RTL dir and logical ms/me/ps/pe spacing; lucide only"
       ]
+    },
+    {
+      "id": 6,
+      "prompt": "The client rejected Soft green. Explicitly rebrand to a red brand ladder (primary around #B42318). Soft theme is already applied; dashboards use bg-primary and from-primary/10.",
+      "expected_output": "Edit only the Soft theme SA ladder (light + dark) in the theme block / theme-bridge; do not rewrite page components; gradients stay on var(--sa-*).",
+      "files": [],
+      "expectations": [
+        "Changes limited to Soft theme markers or theme-bridge SA ladder values",
+        "Does not rewrite dashboard/page TSX just to change hue",
+        "Gradients remain derived from var(--sa-*) after ladder update",
+        "Follows rebrand.md / explicit-request policy"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Existing large React app with shadcn, hundreds of screens, many bg-emerald-* classes, no Soft theme yet. User asks to adopt Saudi Soft.",
+      "expected_output": "Agent asks theme-only vs Soft-native for new UI vs full migration before bulk changes; does not rewrite all pages by default.",
+      "files": [],
+      "expectations": [
+        "Asks user to choose theme-only / Soft-native new work / full migration",
+        "Does not default to rewriting the entire legacy UI",
+        "Theme-only path uses apply-theme without mass page rewrites"
+      ]
     }
   ]
 }

@@ -73,6 +73,8 @@ Composition recipes: [`skills/saudi-soft/references/recipes.md`](skills/saudi-so
 
 Identity tables: [`skills/saudi-soft/references/identity.md`](skills/saudi-soft/references/identity.md)
 
+Rebrand (explicit request): [`skills/saudi-soft/references/rebrand.md`](skills/saudi-soft/references/rebrand.md)
+
 Agent entry: [`skills/saudi-soft/SKILL.md`](skills/saudi-soft/SKILL.md)
 
 ```bash

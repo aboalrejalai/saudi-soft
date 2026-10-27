@@ -38,6 +38,75 @@ function findCssCandidates(root, componentsJson) {
   return [...new Set(list)].filter((p) => exists(p))
 }
 
+function countUiFiles(root) {
+  const dirs = [
+    path.join(root, "src"),
+    path.join(root, "app"),
+    path.join(root, "components"),
+  ].filter((d) => exists(d))
+  let count = 0
+  const stack = [...dirs]
+  while (stack.length && count < 400) {
+    const dir = stack.pop()
+    let entries
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true })
+    } catch {
+      continue
+    }
+    for (const ent of entries) {
+      if (ent.name === "node_modules" || ent.name === ".git" || ent.name === "dist") continue
+      const full = path.join(dir, ent.name)
+      if (ent.isDirectory()) stack.push(full)
+      else if (/\.(tsx|jsx|vue)$/.test(ent.name)) count += 1
+    }
+  }
+  return count
+}
+
+function scanRawPalette(root) {
+  const sampleDirs = [
+    path.join(root, "src"),
+    path.join(root, "app"),
+    path.join(root, "components"),
+  ].filter((d) => exists(d))
+  const re = /\b(bg|text|border)-(green|emerald|lime|teal)-\d{2,3}\b/
+  let hits = 0
+  const examples = []
+  const stack = [...sampleDirs]
+  let filesChecked = 0
+  while (stack.length && filesChecked < 120 && hits < 8) {
+    const dir = stack.pop()
+    let entries
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true })
+    } catch {
+      continue
+    }
+    for (const ent of entries) {
+      if (ent.name === "node_modules" || ent.name === ".git") continue
+      const full = path.join(dir, ent.name)
+      if (ent.isDirectory()) {
+        stack.push(full)
+        continue
+      }
+      if (!/\.(tsx|jsx|css)$/.test(ent.name)) continue
+      filesChecked += 1
+      let text
+      try {
+        text = fs.readFileSync(full, "utf8")
+      } catch {
+        continue
+      }
+      if (re.test(text)) {
+        hits += 1
+        if (examples.length < 3) examples.push(path.relative(root, full))
+      }
+    }
+  }
+  return { hits, examples, filesChecked }
+}
+
 function evaluateProject() {
   const root = process.cwd()
   console.log(
@@ -157,6 +226,19 @@ function evaluateProject() {
     )
   }
 
+  const uiFileCount = countUiFiles(root)
+  const palette = scanRawPalette(root)
+  if (palette.hits > 0) {
+    warnings.push(
+      `${colors.yellow}⚠ Raw green/emerald palette classes in sample (${palette.hits}+ files), e.g. ${palette.examples.join(", ")} — Soft prefers bg-primary / semantic tokens${colors.reset}`
+    )
+  }
+
+  const looksLegacy =
+    componentsJson &&
+    !themeApplied &&
+    (uiFileCount >= 40 || palette.hits >= 3)
+
   console.log(checks.join("\n"))
   if (warnings.length) {
     console.log("\n" + warnings.join("\n"))
@@ -165,6 +247,9 @@ function evaluateProject() {
   console.log(
     `\n${colors.bold}Score: ${score}/13${colors.reset}`
   )
+  if (uiFileCount > 0) {
+    console.log(`UI files sampled count: ${uiFileCount}`)
+  }
 
   if (abort) {
     console.log(
@@ -175,10 +260,27 @@ function evaluateProject() {
   }
 
   let mode
-  if (!exists(packagePath) || (!componentsJson && score < 5)) {
+  if (looksLegacy) {
+    mode = "ASK"
+    console.log(
+      `\n${colors.bold}Recommendation: ASK (legacy / non-Soft)${colors.reset}`
+    )
+    console.log(
+      "Large or non-Soft codebase detected. Ask the user before bulk work:"
+    )
+    console.log(
+      "  1) Theme-only — Soft tokens + new UI only; leave old pages"
+    )
+    console.log(
+      "  2) Soft-native for new work — migrate old pages only when touched"
+    )
+    console.log(
+      "  3) Full Soft migration — only with explicit approval"
+    )
+  } else if (!exists(packagePath) || (!componentsJson && score < 5)) {
     mode = "A"
     console.log(
-      `\n${colors.bold}Recommendation: Mode A${colors.reset} — new project / init shadcn + Soft theme`
+      `\n${colors.bold}Recommendation: Mode A${colors.reset} — new project / init shadcn + Soft theme (Soft-native from day one)`
     )
   } else if (componentsJson && !themeApplied) {
     mode = "B"
