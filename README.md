@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/assets/cover.png" alt="saudi-soft" width="100%"></p>
+
 # Saudi Soft
 
 Agent skill for building React apps with [shadcn/ui](https://ui.shadcn.com) and the Saudi Soft theme.
